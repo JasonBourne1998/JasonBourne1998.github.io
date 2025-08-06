@@ -64,20 +64,18 @@
         <div class="one">
           <div class="two" id='cat3d_image'>
             <video width="100%" height="100%" muted autoplay loop>
-              <source src="images/ASE24.jpg" type="video/mp4">
+              <source src="images/ASE24.mp4" type="video/mp4">  <!-- 确保用的是视频文件 -->
               Your browser does not support the video tag.
             </video>
           </div>
-          <img id="previewImg_ASE" src='images/ASE24.jpg' width="160" style="margin-top:10px;">
+          <img id="previewImg_ASE" src='images/ASE24.jpg' width="160">
           <br>
-          <button onclick="openModal('images/ASE24.jpg')">🔍 放大图片</button>
+          <button onclick="openModal('images/ASE24.jpg')">🔍 Check overview</button>
         </div>
-    
         <script type="text/javascript">
           function cat3d_start() {
             document.getElementById('cat3d_image').style.opacity = "1";
           }
-    
           function cat3d_stop() {
             document.getElementById('cat3d_image').style.opacity = "0";
           }
