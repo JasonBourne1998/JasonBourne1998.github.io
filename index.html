@@ -63,10 +63,10 @@
       <td style="padding:20px;width:25%;vertical-align:middle">
         <div class="one">
           <div class="two" id='cat3d_image'><video  width=100% height=100% muted autoplay loop>
-          <source src="images/Data_tampering.jpg" type="video/mp4">
+          <source src="images/ASE24.jpg" type="video/mp4">
           Your browser does not support the video tag.
           </video></div>
-          <img src='images/Data_tampering.jpg' width="160">
+          <img src='images/ASE24.jpg' width="160">
         </div>
         <script type="text/javascript">
           function cat3d_start() {
@@ -113,10 +113,10 @@
       <td style="padding:20px;width:25%;vertical-align:middle">
         <div class="one">
           <div class="two" id='bog_image'><video  width=100% muted autoplay loop>
-          <source src="images/lane_detection.jpeg" type="video/mp4">
+          <source src="images/Lane_backdoor.jpg" type="video/mp4">
           Your browser does not support the video tag.
           </video></div>
-          <img src='images/lane_detection.jpeg' width=100%>
+          <img src='images/Lane_backdoor.jpg' width=100%>
         </div>
         <script type="text/javascript">
           function bog_start() {
@@ -150,7 +150,7 @@
         <a>Paper(TBD)</a>
         <p></p>
         <p>
-          Deep learning-based lane detection (LD) plays a critical role in autonomous driving and advanced driver assistance systems. However, its vulnerability to backdoor attacks presents a significant security concern. Existing backdoor attack methods on LD often exhibit limited practical utility due to the artificial and conspicuous nature of their triggers. To address this limitation and investigate the impact of more ecologically valid backdoor attacks on LD models, we examine the common data poisoning attack and introduce DBALD, a novel diffusion-based data poisoning framework for generating naturalistic backdoor triggers. DBALD comprises two key components: optimal trigger position finding and stealthy trigger generation. Given the insight that attack performance varies depending on the trigger position, we propose a heatmap-based method to identify the optimal trigger location, with gradient analysis to generate attack-specific heatmaps. A region-based editing diffusion process is then applied to synthesize visually plausible triggers within the most susceptible regions identified previously. Furthermore, to ensure scene integrity and stealthy attacks, we introduce two loss strategies: one for preserving lane structure and another for maintaining the consistency of the driving scene. Consequently, compared to existing attack methods, DBALD achieves both a high attack success rate and superior stealthiness. Extensive experiments on 4 mainstream LD models show that DBALD exceeds state-of-the-art methods, with an average success rate improvement of +10.87% and significantly enhanced stealthiness. The experimental results highlight significant practical challenges in ensuring model robustness against real-world backdoor threats in LD.        </p>
+          This project aims to expose and evaluate backdoor vulnerabilities in lane detection (LD) models by generating naturalistic attack triggers through diffusion-based data poisoning. We identify optimal trigger locations using gradient-based heatmaps and synthesize visually plausible triggers via region-aware diffusion editing. By introducing losses that preserve lane structure and scene consistency, the approach ensures stealthy yet effective attacks. This framework enhances both the realism and impact of backdoor attacks, revealing critical weaknesses in state-of-the-art LD systems.      </p>
       </td>
     </tr>
 
