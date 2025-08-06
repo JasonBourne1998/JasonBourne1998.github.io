@@ -61,25 +61,25 @@
 
     <tr onmouseout="cat3d_stop()" onmouseover="cat3d_start()" bgcolor="#ffffd0">
       <td style="padding:20px;width:25%;vertical-align:middle">
-        <div class="one">
-          <div class="two" id='bog_image'>
-            <img src='images/Lane_backdoor.jpg' width="100%">
-          </div>
-          <img src='images/Lane_backdoor.jpg' width="160">
-          <br>
-          <button onclick="openModal('images/Lane_backdoor.jpg')">🔍 Check overview</button>
-        </div>
-      
-        <script type="text/javascript">
-          function bog_start() {
-            document.getElementById('bog_image').style.opacity = "1";
-          }
-          function bog_stop() {
-            document.getElementById('bog_image').style.opacity = "0";
-          }
-          bog_stop();
-        </script>
-      </td>
+    <div class="one">
+      <div class="two" id='bog_image'>
+        <img src='images/Lane_backdoor.jpg' width="100%">
+      </div>
+      <img src='images/Lane_backdoor.jpg' width="160">
+      <br>
+      <button onclick="openModal('images/Lane_backdoor.jpg')">🔍 Check overview</button>
+    </div>
+    <script type="text/javascript">
+      function bog_start() {
+        document.getElementById('bog_image').style.opacity = "1";
+      }
+
+      function bog_stop() {
+        document.getElementById('bog_image').style.opacity = "0";
+      }
+      bog_stop();
+    </script>
+  </td>
     
       <td style="padding:20px;width:75%;vertical-align:middle">
         <a href="https://dl.acm.org/doi/10.1145/3691620.3695024#">
