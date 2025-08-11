@@ -1,222 +1,297 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+  <meta charset="UTF-8" />
+  <title>Yifan Liao Personal Page</title>
+  <meta name="author" content="Yifan Liao" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="stylesheet.css" />
 
-    <title>Yifan Liao Personal Page</title>
-    <script type="text/javascript">
-      function showEmail() {
-          alert("Yifan's Email: yliao206@connect.hkust-gz.edu.cn");
-      }
-    </script>
-    <meta name="author" content="Yifan Liao">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    
-  </head>
+  <style>
+    :root { --maxw: 800px; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; }
+    table { border: 0; border-spacing: 0; border-collapse: separate; margin: 0 auto; }
+    .name { font-size: 28px; margin: 0.25rem 0 1rem; font-weight: 700; }
+    .highlight { background: #fffbcc; padding: 0 6px; border-radius: 4px; }
+    img { max-width: 100%; display: block; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-  <body>
-    <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-      <tr style="padding:0px">
-        <td style="padding:0px">
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr style="padding:0px">
-              <td style="padding:2.5%;width:63%;vertical-align:middle">
-                <p class="name" style="text-align: center;">
-                  Yifan Liao (廖一凡)
-                </p>
-                <p>I'm a Ph.D. student at HKUST (Guangzhou), supervised by <a href="https://xinleihe.github.io">Prof. Xinlei He.</a></p>
-                <p>Previously, I worked as a research assistant for one year at the <a href="http://www.nusricq.cn/">NUS Research Institute</a> in Chongqing, under the supervision of <a href="https://www.comp.nus.edu.sg/~huangzy">Prof. Zhiyong Huang.</a></p>
-                <p>
-                  I obtained my M.Comp. in Artificial Intelligence at <a href="https://www.comp.nus.edu.sg/">National University of Singapore (NUS)</a>, where I worked closely with <a href="http://linyun.info/"> Prof. Yun Lin </a> and <a href="https://www.comp.nus.edu.sg/~dongjs/"> Prof. Jinsong Dong</a> on my master dissertation project. Before Joining NUS, I received my B.Eng. in Mechanical Engineering  at <a href="https://english.cqu.edu.cn/"> Chongqing University (CQU)</a>.
-                </p>
-                <p style="text-align:center">
-                  <a href="#" onclick="showEmail()">Email</a> &nbsp;/&nbsp;
-                  <a href="data/CV_Yifan_Liao_US.pdf">CV</a> &nbsp;/&nbsp;
-                  <!-- <a href="data/JonBarron-bio.txt">Bio</a> &nbsp;/&nbsp; -->
-                  <a href="https://scholar.google.com/citations?user=g3Mlu3IAAAAJ&hl=zh-CN">Scholar</a> &nbsp;/&nbsp;
-                  <!-- <a href="https://twitter.com/jon_barron">Twitter</a> &nbsp;/&nbsp; -->
-                  <a href="https://github.com/JasonBourne1998/">Github</a>&nbsp;/&nbsp;
-                  <a href="https://www.linkedin.com/in/yifan-liao-3b69b6227/">linkedin</a>
-                </p>
-              </td>
-              <td style="padding:2.5%;width:40%;max-width:40%">
-                <a href="images/Yifan.jpg"><img style="width:100%;max-width:100%;object-fit: cover; border-radius: 50%;" alt="profile photo" src="images/Yifan.jpg" class="hoverZoomLink"></a>
-              </td>
-            </tr>
-          </tbody></table>
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-              <tr>
-              <td style="padding:20px;width:100%;vertical-align:middle">
-                <h2>Leading Research</h2>
-                <p>
-                  I'm interested in AI4testing and Autonomous Driving testing. Most of my research is about detecting the anomalies targeting agents. Some projects are <span class="highlight">highlighted</span>.
-                </p>
-              </td>
-            </tr>
-          </tbody></table>
-          <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+    /* preview tiles */
+    .one { position: relative; }
+    .two { position: absolute; inset: 0; transition: opacity .2s ease; }
+    .two video, .two img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+    .preview-img { width: 160px; border-radius: 6px; }
 
+    /* modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .modal.open { display: flex; }
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 0 20px #fff;
+    }
+    .modal img.modal-content, .modal video.modal-content { border-radius: 8px; }
+    .close {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      user-select: none;
+    }
+    .close:hover { color: #ccc; }
 
-    <tr onmouseout="cat3d_stop()" onmouseover="cat3d_start()" bgcolor="#ffffd0">
-      <td style="padding:20px;width:25%;vertical-align:middle">
-        <div class="one">
-          <div class="two" id='cat3d_image'>
-            <video width="100%" height="100%" muted autoplay loop>
-              <source src="images/ASE24.jpg" type="video/mp4">  <!-- 确保用的是视频文件 -->
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <img id="previewImg_ASE" src='images/ASE24.jpg' width="160">
-          <br>
-          <button onclick="openModal('images/ASE24.jpg')">🔍 Check overview</button>
-        </div>
-        <script type="text/javascript">
-          function cat3d_start() {
-            document.getElementById('cat3d_image').style.opacity = "1";
-          }
-          function cat3d_stop() {
-            document.getElementById('cat3d_image').style.opacity = "0";
-          }
-          cat3d_stop();
-        </script>
-      </td>
-    
-      <td style="padding:20px;width:75%;vertical-align:middle">
-        <a href="https://dl.acm.org/doi/10.1145/3691620.3695024#">
-          Detecting and Explaining Anomalies Caused by Web Tamper Attacks via Building Consistency-based Normality
-        </a>
-        <br>
-        <strong>Yifan Liao</strong>,
-        <a href="https://ming-xu-research.github.io/">Ming Xu</a>, 
-        <a href="http://linyun.info/">Yun Lin</a>,
-        <a href="https://xiwen.me/">Xiwen Teoh</a>,
-        <a href="https://xiaofeixie.bitbucket.io/">Xiaofei Xie</a>, 
-        <a href="https://researchportal.scu.edu.au/esploro/profile/ruitao_feng/overview">Ruitao Feng</a>, 
-        <a href="https://sites.google.com/site/hongyujohn/">Hongyu Zhang</a>, 
-        <a href="https://www.comp.nus.edu.sg/~dongjs/">Jinsong Dong</a>
-    
-        <br>
-        <strong>ASE'24 (CCF-A)</strong>
-        <br>
-        <a href="https://sites.google.com/view/webnorm/home">Project Page</a>
-        |
-        <a href="https://dl.acm.org/doi/pdf/10.1145/3691620.3695024">Paper</a>
-        |
-        <a href="https://github.com/JasonBourne1998/Webnorm">Code</a>
-        <p></p>
-        <p>
-          This project aims to detect and explain attack-induced anomalies in web applications by learning normal behavioral during runtime. We model the normal constraints with first-order logic, and generate executable Python scripts. By leveraging LLMs in the learning process, this approach enhances both the detection and explanation of anomalies.
-        </p>
-      </td>
-    </tr>
-    
-    <tr onmouseout="bog_stop()" onmouseover="bog_start()">
-      <td style="padding:20px;width:25%;vertical-align:middle">
-        <div class="one">
-          <div class="two" id='bog_image'><video  width=100% muted autoplay loop>
-          <source src="images/Lane_backdoor.jpg" type="video/mp4">
-          Your browser does not support the video tag.
-          </video></div>
-          <img src='images/Lane_backdoor.jpg' width=100%>
-        </div>
-        <script type="text/javascript">
-          function bog_start() {
-            document.getElementById('bog_image').style.opacity = "1";
-          }
+    /* buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1px solid #ddd;
+      background: #fff;
+      padding: .5rem .75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: box-shadow .15s ease, transform .04s ease;
+    }
+    .btn:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+    .btn:active { transform: translateY(1px); }
+  </style>
 
-          function bog_stop() {
-            document.getElementById('bog_image').style.opacity = "0";
-          }
-          bog_stop()
-        </script>
-      </td>
-      <td style="padding:20px;width:75%;vertical-align:middle">
-        <a href="https://sites.google.com/view/">
-          <span class="papertitle">Towards Stealthy and Effective Backdoor Attacks on Lane Detection: A Naturalistic Data Poisoning Approach
-      </span>
-        </a>
-        <br>
-				<strong>Yifan Liao</strong>,
-        <a href="https://yuxincao22.github.io/">Yuxin Cao</a>,
-        <a href="https://zhangyedi.github.io/">Yedi Zhang</a>, 
-        <a href="https://wentaoheunnc.github.io/">Wentao He</a>, 
-        <a href="https://yanxiao6.github.io/">Yan Xiao</a>, 
-        <a href="https://www.comp.nus.edu.sg/~huangzy">Zhiyong Huang</a>, 
-        <a href="https://www.comp.nus.edu.sg/~dongjs/">Jinsong Dong</a>
-        <br>
-        <em>Preprint</em>, 2025
-        <br>
-        <a href="https://sites.google.com/view/">Project Page(TBD)</a>
-        /
-        <a>Paper(TBD)</a>
-        <p></p>
-        <p>
-          This project aims to expose and evaluate backdoor vulnerabilities in lane detection (LD) models by generating naturalistic attack triggers through diffusion-based data poisoning. We identify optimal trigger locations using gradient-based heatmaps and synthesize visually plausible triggers via region-aware diffusion editing. By introducing losses that preserve lane structure and scene consistency, the approach ensures stealthy yet effective attacks. This framework enhances both the realism and impact of backdoor attacks, revealing critical weaknesses in state-of-the-art LD systems.      </p>
-      </td>
-    </tr>
-        </td>
-      </tr>
-    </table>
-    
-    <div id="imgModal" class="modal" onclick="closeModal()">
-      <span class="close">&times;</span>
-      <img class="modal-content" id="modalImage">
-    </div>
-    
-    <!-- CSS 样式 -->
-    <style>
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        padding-top: 60px;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.85);
-        text-align: center;
-      }
-    
-      .modal-content {
-        margin: auto;
-        display: block;
-        max-width: 80%;
-        max-height: 80%;
-        box-shadow: 0 0 20px #fff;
-      }
-    
-      .close {
-        position: absolute;
-        top: 30px;
-        right: 50px;
-        color: #fff;
-        font-size: 40px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-    
-      .close:hover {
-        color: #ccc;
-      }
-    </style>
-    
-    <!-- JS 脚本 -->
-    <script>
-      function openModal(imgSrc) {
-        const modal = document.getElementById("imgModal");
-        const modalImg = document.getElementById("modalImage");
-        modal.style.display = "block";
+  <script>
+    // kept as a function; bound to a button via addEventListener for CSP safety
+    function showEmail() {
+      alert("Yifan's Email: yliao206@connect.hkust-gz.edu.cn");
+    }
+  </script>
+</head>
+
+<body>
+  <table style="width:100%;max-width:var(--maxw);margin-left:auto;margin-right:auto;"><tbody>
+    <tr><td>
+      <table style="width:100%;"><tbody>
+        <tr>
+          <td style="padding:2.5%;width:63%;vertical-align:middle">
+            <p class="name" style="text-align:center;">Yifan Liao (廖一凡)</p>
+            <p>I'm a Ph.D. student at HKUST (Guangzhou), supervised by <a href="https://xinleihe.github.io">Prof. Xinlei He.</a></p>
+            <p>Previously, I worked as a research assistant for one year at the <a href="http://www.nusricq.cn/">NUS Research Institute</a> in Chongqing, under the supervision of <a href="https://www.comp.nus.edu.sg/~huangzy">Prof. Zhiyong Huang.</a></p>
+            <p>
+              I obtained my M.Comp. in Artificial Intelligence at <a href="https://www.comp.nus.edu.sg/">National University of Singapore (NUS)</a>, where I worked closely with
+              <a href="http://linyun.info/"> Prof. Yun Lin </a> and <a href="https://www.comp.nus.edu.sg/~dongjs/"> Prof. Jinsong Dong</a> on my master dissertation project. Before joining NUS, I received my B.Eng. in Mechanical Engineering at <a href="https://english.cqu.edu.cn/">Chongqing University (CQU)</a>.
+            </p>
+            <p style="text-align:center">
+              <button class="btn" id="btnEmail">Email</button> &nbsp;/&nbsp;
+              <a href="data/CV_Yifan_Liao_US.pdf">CV</a> &nbsp;/&nbsp;
+              <a href="https://scholar.google.com/citations?user=g3Mlu3IAAAAJ&hl=zh-CN">Scholar</a> &nbsp;/&nbsp;
+              <a href="https://github.com/JasonBourne1998/">Github</a>&nbsp;/&nbsp;
+              <a href="https://www.linkedin.com/in/yifan-liao-3b69b6227/">LinkedIn</a>
+            </p>
+          </td>
+          <td style="padding:2.5%;width:40%;max-width:40%">
+            <a href="images/Yifan.jpg">
+              <img style="width:100%;max-width:100%;object-fit:cover;border-radius:50%;" alt="profile photo" src="images/Yifan.jpg">
+            </a>
+          </td>
+        </tr>
+      </tbody></table>
+
+      <table style="width:100%;"><tbody>
+        <tr>
+          <td style="padding:20px;width:100%;vertical-align:middle">
+            <h2>Leading Research</h2>
+            <p>I'm interested in AI4testing and Autonomous Driving testing. Most of my research is about detecting the anomalies targeting agents. Some projects are <span class="highlight">highlighted</span>.</p>
+          </td>
+        </tr>
+      </tbody></table>
+
+      <table style="width:100%;"><tbody>
+
+        <!-- Project 1 -->
+        <tr data-hover="cat3d" style="background:#ffffd0;">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id="cat3d_image">
+                <!-- if you have a video preview, point to mp4 below -->
+                <video width="100%" height="100%" muted autoplay loop playsinline>
+                  <source src="images/ASE24.mp4" type="video/mp4">
+                </video>
+              </div>
+              <img id="previewImg_ASE" class="preview-img" src="images/ASE24.jpg" alt="ASE24 overview preview">
+              <br>
+              <button class="btn" id="btnASE" data-modal-img="images/ASE24.jpg">🔍 Check overview</button>
+            </div>
+          </td>
+
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://dl.acm.org/doi/10.1145/3691620.3695024#">
+              Detecting and Explaining Anomalies Caused by Web Tamper Attacks via Building Consistency-based Normality
+            </a>
+            <br>
+            <strong>Yifan Liao</strong>,
+            <a href="https://ming-xu-research.github.io/">Ming Xu</a>,
+            <a href="http://linyun.info/">Yun Lin</a>,
+            <a href="https://xiwen.me/">Xiwen Teoh</a>,
+            <a href="https://xiaofeixie.bitbucket.io/">Xiaofei Xie</a>,
+            <a href="https://researchportal.scu.edu.au/esploro/profile/ruitao_feng/overview">Ruitao Feng</a>,
+            <a href="https://sites.google.com/site/hongyujohn/">Hongyu Zhang</a>,
+            <a href="https://www.comp.nus.edu.sg/~dongjs/">Jinsong Dong</a>
+            <br>
+            <strong>ASE'24 (CCF-A)</strong>
+            <br>
+            <a href="https://sites.google.com/view/webnorm/home">Project Page</a> |
+            <a href="https://dl.acm.org/doi/pdf/10.1145/3691620.3695024">Paper</a> |
+            <a href="https://github.com/JasonBourne1998/Webnorm">Code</a>
+            <p>This project detects and explains attack-induced anomalies in web applications by learning normal behavior at runtime using first-order logic constraints and LLM-assisted script synthesis.</p>
+          </td>
+        </tr>
+
+        <!-- Project 2 -->
+        <tr data-hover="bog">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id="bog_image">
+                <video width="100%" height="100%" muted autoplay loop playsinline>
+                  <source src="images/Lane_backdoor.mp4" type="video/mp4">
+                </video>
+              </div>
+              <img id="previewImg_Lane" class="preview-img" src="images/Lane_backdoor.jpg" alt="Lane backdoor preview">
+              <br>
+              <button class="btn" id="btnLane" data-modal-img="images/Lane_backdoor.jpg">🔍 Check overview</button>
+              <!-- If you prefer enlarging the video instead, change to data-modal-video="images/Lane_backdoor.mp4" -->
+            </div>
+          </td>
+
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://sites.google.com/view/">
+              <span class="papertitle">Towards Stealthy and Effective Backdoor Attacks on Lane Detection: A Naturalistic Data Poisoning Approach</span>
+            </a>
+            <br>
+            <strong>Yifan Liao</strong>,
+            <a href="https://yuxincao22.github.io/">Yuxin Cao</a>,
+            <a href="https://zhangyedi.github.io/">Yedi Zhang</a>,
+            <a href="https://wentaoheunnc.github.io/">Wentao He</a>,
+            <a href="https://yanxiao6.github.io/">Yan Xiao</a>,
+            <a href="https://www.comp.nus.edu.sg/~huangzy">Zhiyong Huang</a>,
+            <a href="https://www.comp.nus.edu.sg/~dongjs/">Jinsong Dong</a>
+            <br>
+            <em>Preprint</em>, 2025
+            <br>
+            <a href="https://sites.google.com/view/">Project Page (TBD)</a> / <a>Paper (TBD)</a>
+            <p>We expose and evaluate backdoor vulnerabilities in lane detection via diffusion-based naturalistic data poisoning, using gradient-informed trigger placement and structure/scene-consistency losses for stealthy, effective attacks.</p>
+          </td>
+        </tr>
+
+      </tbody></table>
+    </td></tr>
+  </tbody></table>
+
+  <!-- Modal -->
+  <div id="imgModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <span class="close" id="modalClose" aria-label="Close">&times;</span>
+    <img class="modal-content" id="modalImage" alt="">
+    <video class="modal-content" id="modalVideo" controls playsinline></video>
+  </div>
+
+  <script>
+    // hover preview (replaces inline onmouseover/onmouseout)
+    function setHoverHandlers() {
+      const hoverRows = document.querySelectorAll('tr[data-hover]');
+      hoverRows.forEach(row => {
+        const key = row.getAttribute('data-hover');
+        const overlay = document.getElementById(key + '_image');
+        if (!overlay) return;
+        const show = () => overlay.style.opacity = '1';
+        const hide = () => overlay.style.opacity = '0';
+        hide();
+        row.addEventListener('mouseenter', show);
+        row.addEventListener('mouseleave', hide);
+      });
+    }
+
+    // modal helpers
+    function openModalMedia({ imgSrc = null, videoSrc = null }) {
+      const modal = document.getElementById('imgModal');
+      const modalImg = document.getElementById('modalImage');
+      const modalVideo = document.getElementById('modalVideo');
+
+      // reset
+      modalImg.style.display = 'none';
+      modalVideo.style.display = 'none';
+      modalImg.removeAttribute('src');
+      modalVideo.removeAttribute('src');
+
+      if (imgSrc) {
         modalImg.src = imgSrc;
+        modalImg.style.display = 'block';
+      } else if (videoSrc) {
+        modalVideo.src = videoSrc;
+        modalVideo.style.display = 'block';
       }
-    
-      function closeModal() {
-        document.getElementById("imgModal").style.display = "none";
-      }
-    </script>
-  
-  </body>
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imgModal');
+      const modalVideo = document.getElementById('modalVideo');
+      modalVideo.pause?.();
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // wire everything
+    document.addEventListener('DOMContentLoaded', function () {
+      // email button
+      document.getElementById('btnEmail')?.addEventListener('click', showEmail);
+
+      // hover overlays
+      setHoverHandlers();
+
+      // preview images open modal too
+      document.getElementById('previewImg_ASE')?.addEventListener('click', () =>
+        openModalMedia({ imgSrc: 'images/ASE24.jpg' })
+      );
+      document.getElementById('previewImg_Lane')?.addEventListener('click', () =>
+        openModalMedia({ imgSrc: 'images/Lane_backdoor.jpg' })
+      );
+
+      // “Check overview” buttons (prefer image; switch to data-modal-video if you want video enlarged)
+      const btnASE = document.getElementById('btnASE');
+      const btnLane = document.getElementById('btnLane');
+
+      [btnASE, btnLane].forEach(btn => {
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const imgSrc = btn.getAttribute('data-modal-img');
+          const videoSrc = btn.getAttribute('data-modal-video');
+          openModalMedia({ imgSrc, videoSrc });
+        });
+      });
+
+      // modal close bindings
+      document.getElementById('modalClose')?.addEventListener('click', closeModal);
+      document.getElementById('imgModal')?.addEventListener('click', (e) => {
+        if (e.target.id === 'imgModal') closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+    });
+  </script>
+</body>
 </html>
