@@ -9,12 +9,7 @@
   <link rel="stylesheet" href="stylesheet.css" />
 
   <style>
-    /* —— 布局与主题 —— */
-    :root { --maxw: 1200px; } /* 桌面端更宽，图片更清晰 */
-    @media (max-width: 1200px){ :root { --maxw: 1000px; } }
-    @media (max-width: 1024px){ :root { --maxw: 860px; } }
-    @media (max-width: 768px) { :root { --maxw: 92vw; } }
-
+    :root { --maxw: 800px; }
     body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; }
     table { border: 0; border-spacing: 0; border-collapse: separate; margin: 0 auto; }
     .name { font-size: 28px; margin: 0.25rem 0 1rem; font-weight: 700; }
@@ -23,13 +18,13 @@
     a { color: #0366d6; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* —— 预览卡片 —— */
+    /* preview tiles */
     .one { position: relative; }
     .two { position: absolute; inset: 0; transition: opacity .2s ease; }
     .two img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
-    .preview-img { width: 220px; border-radius: 6px; cursor: zoom-in; } /* 预览也稍微放大一点 */
+    .preview-img { width: 160px; border-radius: 6px; cursor: zoom-in; }
 
-    /* —— 按钮 —— */
+    /* buttons (也用于 <a class="btn">) */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -41,69 +36,8 @@
       cursor: pointer;
       transition: box-shadow .15s ease, transform .04s ease;
     }
-    .btn:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+    .btn:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); text-decoration: none; }
     .btn:active { transform: translateY(1px); }
-
-    /* —— 富文本弹窗（整块放大） —— */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
-    }
-    .modal.open { display: flex; }
-
-    .rich-card {
-      width: 96vw;
-      max-width: 1280px;       /* 弹窗更宽，便于清晰查看 */
-      background: #fff;
-      color: #111;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,.35);
-      overflow: hidden;
-    }
-    .rich-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr; /* 图片稍大一列 */
-      gap: 0;
-    }
-    @media (max-width: 960px){
-      .rich-grid { grid-template-columns: 1fr; }
-    }
-
-    .rich-media { background:#000; display:flex; align-items:center; justify-content:center; }
-    .rich-media img {
-      width: 100%; height: 100%;
-      max-height: 82vh; object-fit: contain; /* 保证大图清晰可见 */
-      background:#000;
-    }
-
-    .rich-body { padding: 28px 28px 24px; }
-    .rich-title { font-size: 22px; font-weight: 700; margin: 0 0 10px; line-height: 1.35; }
-    .rich-authors { margin: 0 0 8px; }
-    .rich-venue { font-weight: 700; margin: 0 0 10px; }
-    .rich-links a { margin-right: 12px; }
-    .rich-abs { margin-top: 14px; }
-
-    .close {
-      position: fixed;
-      top: 18px;
-      right: 26px;
-      color: #fff;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      line-height: 1;
-      user-select: none;
-    }
-    .close:hover { color: #ccc; }
-
-    /* 行高亮色保留 */
-    tr[style*="background:#ffffd0"] { background:#ffffd0; }
   </style>
 
   <script>
@@ -153,16 +87,23 @@
 
       <table style="width:100%;"><tbody>
 
-        <!-- Project 1 (image only) -->
+        <!-- Project 1 (image only, 与头像同样：直接 <a href="大图">) -->
         <tr data-hover="cat3d" style="background:#ffffd0;">
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one">
               <div class="two" id="cat3d_image">
-                <img src="images/ASE24.jpg" alt="ASE hover image">
+                <a href="images/ASE24.jpg">
+                  <img src="images/ASE24.jpg" alt="ASE hover image">
+                </a>
               </div>
-              <img id="previewImg_ASE" class="preview-img" src="images/ASE24.jpg" alt="ASE24 overview preview">
+
+              <!-- 缩略图也用链接包裹，点击直接跳转到原图 -->
+              <a href="images/ASE24.jpg">
+                <img id="previewImg_ASE" class="preview-img" src="images/ASE24.jpg" alt="ASE24 overview preview">
+              </a>
               <br>
-              <button class="btn" id="btnASE" data-rich="#rich_ASE">🔍 Check overview</button>
+              <!-- 按钮改为 <a>，与头像一致的跳转 -->
+              <a class="btn" href="images/ASE24.jpg">🔍 Check overview</a>
             </div>
           </td>
 
@@ -189,16 +130,21 @@
           </td>
         </tr>
 
-        <!-- Project 2 (image only) -->
+        <!-- Project 2 (image only, 同样用 <a> 跳转大图) -->
         <tr data-hover="bog">
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one">
               <div class="two" id="bog_image">
-                <img src="images/Lane_backdoor.jpg" alt="Lane hover image">
+                <a href="images/Lane_backdoor.jpg">
+                  <img src="images/Lane_backdoor.jpg" alt="Lane hover image">
+                </a>
               </div>
-              <img id="previewImg_Lane" class="preview-img" src="images/Lane_backdoor.jpg" alt="Lane backdoor preview">
+
+              <a href="images/Lane_backdoor.jpg">
+                <img id="previewImg_Lane" class="preview-img" src="images/Lane_backdoor.jpg" alt="Lane backdoor preview">
+              </a>
               <br>
-              <button class="btn" id="btnLane" data-rich="#rich_Lane">🔍 Check overview</button>
+              <a class="btn" href="images/Lane_backdoor.jpg">🔍 Check overview</a>
             </div>
           </td>
 
@@ -226,46 +172,8 @@
     </td></tr>
   </tbody></table>
 
-  <!-- —— 富文本弹窗（整块内容放大：左图 + 右侧文本） —— -->
-  <div id="richModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <span class="close" id="richClose" aria-label="Close">&times;</span>
-    <div class="rich-card">
-      <div class="rich-grid" id="richBody"><!-- JS 注入具体条目 --></div>
-    </div>
-  </div>
-
-  <!-- —— 每个条目的富文本模板（隐藏） —— -->
-  <div id="rich_ASE" hidden>
-    <div class="rich-media"><img src="images/ASE24.jpg" alt="ASE overview large"></div>
-    <div class="rich-body">
-      <div class="rich-title">Detecting and Explaining Anomalies Caused by Web Tamper Attacks via Building Consistency-based Normality</div>
-      <p class="rich-authors"><strong>Yifan Liao</strong>, <a href="https://ming-xu-research.github.io/">Ming Xu</a>, <a href="http://linyun.info/">Yun Lin</a>, <a href="https://xiwen.me/">Xiwen Teoh</a>, <a href="https://xiaofeixie.bitbucket.io/">Xiaofei Xie</a>, <a href="https://researchportal.scu.edu.au/esploro/profile/ruitao_feng/overview">Ruitao Feng</a>, <a href="https://sites.google.com/site/hongyujohn/">Hongyu Zhang</a>, <a href="https://www.comp.nus.edu.sg/~dongjs/">Jinsong Dong</a></p>
-      <p class="rich-venue">ASE'24 (CCF-A)</p>
-      <p class="rich-links">
-        <a href="https://sites.google.com/view/webnorm/home">Project Page</a>
-        <a href="https://dl.acm.org/doi/pdf/10.1145/3691620.3695024">Paper</a>
-        <a href="https://github.com/JasonBourne1998/Webnorm">Code</a>
-      </p>
-      <p class="rich-abs">This project detects and explains attack-induced anomalies in web applications by learning normal behavior at runtime using first-order logic constraints and LLM-assisted script synthesis.</p>
-    </div>
-  </div>
-
-  <div id="rich_Lane" hidden>
-    <div class="rich-media"><img src="images/Lane_backdoor.jpg" alt="Lane backdoor large"></div>
-    <div class="rich-body">
-      <div class="rich-title">Towards Stealthy and Effective Backdoor Attacks on Lane Detection: A Naturalistic Data Poisoning Approach</div>
-      <p class="rich-authors"><strong>Yifan Liao</strong>, <a href="https://yuxincao22.github.io/">Yuxin Cao</a>, <a href="https://zhangyedi.github.io/">Yedi Zhang</a>, <a href="https://wentaoheunnc.github.io/">Wentao He</a>, <a href="https://yanxiao6.github.io/">Yan Xiao</a>, <a href="https://www.comp.nus.edu.sg/~huangzy">Zhiyong Huang</a>, <a href="https://www.comp.nus.edu.sg/~dongjs/">Jinsong Dong</a></p>
-      <p class="rich-venue"><em>Preprint</em>, 2025</p>
-      <p class="rich-links">
-        <a href="https://sites.google.com/view/">Project Page (TBD)</a>
-        <a>Paper (TBD)</a>
-      </p>
-      <p class="rich-abs">We expose and evaluate backdoor vulnerabilities in lane detection via diffusion-based naturalistic data poisoning, using gradient-informed trigger placement and structure/scene-consistency losses for stealthy, effective attacks.</p>
-    </div>
-  </div>
-
   <script>
-    // 行内悬浮预览（无内联事件）
+    // 行悬浮预览
     function setHoverHandlers() {
       const hoverRows = document.querySelectorAll('tr[data-hover]');
       hoverRows.forEach(row => {
@@ -279,46 +187,9 @@
         row.addEventListener('mouseleave', hide);
       });
     }
-
-    // 打开富文本弹窗：整块（图片+作者等）一起变宽
-    function openRich(selector) {
-      const tpl = document.querySelector(selector);
-      if (!tpl) return;
-      const modal = document.getElementById('richModal');
-      const body = document.getElementById('richBody');
-      body.innerHTML = tpl.innerHTML;  // 注入该条目的富文本内容
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-    }
-    function closeRich() {
-      const modal = document.getElementById('richModal');
-      const body = document.getElementById('richBody');
-      body.innerHTML = '';
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
-      // Email
-      document.getElementById('btnEmail')?.addEventListener('click', () => showEmail());
-
-      // 悬浮
+      document.getElementById('btnEmail')?.addEventListener('click', showEmail);
       setHoverHandlers();
-
-      // 预览图点击也打开富文本弹窗
-      document.getElementById('previewImg_ASE')?.addEventListener('click', () => openRich('#rich_ASE'));
-      document.getElementById('previewImg_Lane')?.addEventListener('click', () => openRich('#rich_Lane'));
-
-      // “Check overview” 按钮打开富文本弹窗
-      document.getElementById('btnASE')?.addEventListener('click', (e) => { e.preventDefault(); openRich('#rich_ASE'); });
-      document.getElementById('btnLane')?.addEventListener('click', (e) => { e.preventDefault(); openRich('#rich_Lane'); });
-
-      // 关闭
-      document.getElementById('richClose')?.addEventListener('click', closeRich);
-      document.getElementById('richModal')?.addEventListener('click', (e) => {
-        if (e.target.id === 'richModal') closeRich();
-      });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeRich(); });
     });
   </script>
 </body>
