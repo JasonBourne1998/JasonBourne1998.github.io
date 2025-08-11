@@ -21,8 +21,23 @@
     /* preview tiles */
     .one { position: relative; }
     .two { position: absolute; inset: 0; transition: opacity .2s ease; }
-    .two video, .two img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
-    .preview-img { width: 160px; border-radius: 6px; }
+    .two img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+    .preview-img { width: 160px; border-radius: 6px; cursor: zoom-in; }
+
+    /* buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1px solid #ddd;
+      background: #fff;
+      padding: .5rem .75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: box-shadow .15s ease, transform .04s ease;
+    }
+    .btn:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+    .btn:active { transform: translateY(1px); }
 
     /* modal */
     .modal {
@@ -40,8 +55,8 @@
       max-width: 90vw;
       max-height: 90vh;
       box-shadow: 0 0 20px #fff;
+      border-radius: 8px;
     }
-    .modal img.modal-content, .modal video.modal-content { border-radius: 8px; }
     .close {
       position: fixed;
       top: 24px;
@@ -54,25 +69,9 @@
       user-select: none;
     }
     .close:hover { color: #ccc; }
-
-    /* buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      border: 1px solid #ddd;
-      background: #fff;
-      padding: .5rem .75rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: box-shadow .15s ease, transform .04s ease;
-    }
-    .btn:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
-    .btn:active { transform: translateY(1px); }
   </style>
 
   <script>
-    // kept as a function; bound to a button via addEventListener for CSP safety
     function showEmail() {
       alert("Yifan's Email: yliao206@connect.hkust-gz.edu.cn");
     }
@@ -119,15 +118,12 @@
 
       <table style="width:100%;"><tbody>
 
-        <!-- Project 1 -->
+        <!-- Project 1 (image only) -->
         <tr data-hover="cat3d" style="background:#ffffd0;">
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one">
               <div class="two" id="cat3d_image">
-                <!-- if you have a video preview, point to mp4 below -->
-                <video width="100%" height="100%" muted autoplay loop playsinline>
-                  <source src="images/ASE24.mp4" type="video/mp4">
-                </video>
+                <img src="images/ASE24.jpg" alt="ASE hover image">
               </div>
               <img id="previewImg_ASE" class="preview-img" src="images/ASE24.jpg" alt="ASE24 overview preview">
               <br>
@@ -158,19 +154,16 @@
           </td>
         </tr>
 
-        <!-- Project 2 -->
+        <!-- Project 2 (image only) -->
         <tr data-hover="bog">
           <td style="padding:20px;width:25%;vertical-align:middle">
             <div class="one">
               <div class="two" id="bog_image">
-                <video width="100%" height="100%" muted autoplay loop playsinline>
-                  <source src="images/Lane_backdoor.mp4" type="video/mp4">
-                </video>
+                <img src="images/Lane_backdoor.jpg" alt="Lane hover image">
               </div>
               <img id="previewImg_Lane" class="preview-img" src="images/Lane_backdoor.jpg" alt="Lane backdoor preview">
               <br>
               <button class="btn" id="btnLane" data-modal-img="images/Lane_backdoor.jpg">🔍 Check overview</button>
-              <!-- If you prefer enlarging the video instead, change to data-modal-video="images/Lane_backdoor.mp4" -->
             </div>
           </td>
 
@@ -198,15 +191,14 @@
     </td></tr>
   </tbody></table>
 
-  <!-- Modal -->
+  <!-- Modal (image only) -->
   <div id="imgModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
     <span class="close" id="modalClose" aria-label="Close">&times;</span>
     <img class="modal-content" id="modalImage" alt="">
-    <video class="modal-content" id="modalVideo" controls playsinline></video>
   </div>
 
   <script>
-    // hover preview (replaces inline onmouseover/onmouseout)
+    // hover preview (no inline events)
     function setHoverHandlers() {
       const hoverRows = document.querySelectorAll('tr[data-hover]');
       hoverRows.forEach(row => {
@@ -221,34 +213,18 @@
       });
     }
 
-    // modal helpers
-    function openModalMedia({ imgSrc = null, videoSrc = null }) {
+    // modal helpers (image only)
+    function openModalImage(src) {
       const modal = document.getElementById('imgModal');
       const modalImg = document.getElementById('modalImage');
-      const modalVideo = document.getElementById('modalVideo');
-
-      // reset
-      modalImg.style.display = 'none';
-      modalVideo.style.display = 'none';
-      modalImg.removeAttribute('src');
-      modalVideo.removeAttribute('src');
-
-      if (imgSrc) {
-        modalImg.src = imgSrc;
-        modalImg.style.display = 'block';
-      } else if (videoSrc) {
-        modalVideo.src = videoSrc;
-        modalVideo.style.display = 'block';
-      }
-
+      modalImg.src = src;
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
     }
-
     function closeModal() {
       const modal = document.getElementById('imgModal');
-      const modalVideo = document.getElementById('modalVideo');
-      modalVideo.pause?.();
+      const modalImg = document.getElementById('modalImage');
+      modalImg.removeAttribute('src');
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
     }
@@ -261,25 +237,21 @@
       // hover overlays
       setHoverHandlers();
 
-      // preview images open modal too
+      // thumbnails: click to enlarge
       document.getElementById('previewImg_ASE')?.addEventListener('click', () =>
-        openModalMedia({ imgSrc: 'images/ASE24.jpg' })
+        openModalImage('images/ASE24.jpg')
       );
       document.getElementById('previewImg_Lane')?.addEventListener('click', () =>
-        openModalMedia({ imgSrc: 'images/Lane_backdoor.jpg' })
+        openModalImage('images/Lane_backdoor.jpg')
       );
 
-      // “Check overview” buttons (prefer image; switch to data-modal-video if you want video enlarged)
-      const btnASE = document.getElementById('btnASE');
-      const btnLane = document.getElementById('btnLane');
-
-      [btnASE, btnLane].forEach(btn => {
+      // “Check overview” buttons
+      [document.getElementById('btnASE'), document.getElementById('btnLane')].forEach(btn => {
         if (!btn) return;
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           const imgSrc = btn.getAttribute('data-modal-img');
-          const videoSrc = btn.getAttribute('data-modal-video');
-          openModalMedia({ imgSrc, videoSrc });
+          if (imgSrc) openModalImage(imgSrc);
         });
       });
 
